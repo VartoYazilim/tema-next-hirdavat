@@ -32,6 +32,7 @@ function getStoredState() {
 export function StoreProvider({ children }) {
   const [state, setState] = useState(initialState);
   const [hydrated, setHydrated] = useState(false);
+  const [cartNotice, setCartNotice] = useState(null);
 
   useEffect(() => {
     setState(getStoredState());
@@ -44,6 +45,18 @@ export function StoreProvider({ children }) {
     }
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [hydrated, state]);
+
+  useEffect(() => {
+    if (!cartNotice) {
+      return undefined;
+    }
+
+    const timeout = window.setTimeout(() => {
+      setCartNotice(null);
+    }, 2400);
+
+    return () => window.clearTimeout(timeout);
+  }, [cartNotice]);
 
   const cartItemsDetailed = useMemo(() => {
     return state.cart
@@ -67,6 +80,8 @@ export function StoreProvider({ children }) {
   );
 
   const addToCart = (slug, quantity = 1) => {
+    const product = products.find((entry) => entry.slug === slug);
+
     setState((current) => {
       const existing = current.cart.find((item) => item.slug === slug);
       if (existing) {
@@ -83,6 +98,19 @@ export function StoreProvider({ children }) {
         cart: [...current.cart, { slug, quantity }]
       };
     });
+
+    if (product) {
+      setCartNotice({
+        id: Date.now(),
+        title: "Sepete eklendi",
+        message: `${product.name} sepetinize eklendi.`,
+        quantity
+      });
+    }
+  };
+
+  const dismissCartNotice = () => {
+    setCartNotice(null);
   };
 
   const updateCartQuantity = (slug, quantity) => {
@@ -146,7 +174,9 @@ export function StoreProvider({ children }) {
     cartItemsDetailed,
     cartCount,
     cartSubtotal,
+    cartNotice,
     addToCart,
+    dismissCartNotice,
     updateCartQuantity,
     removeFromCart,
     registerUser,

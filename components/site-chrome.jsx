@@ -19,6 +19,35 @@ const mobileLinks = [
   { href: "/sepet", label: "Sepet", icon: "shopping_cart" }
 ];
 
+function CartNotice() {
+  const { cartNotice, dismissCartNotice } = useStore();
+
+  if (!cartNotice) {
+    return null;
+  }
+
+  return (
+    <div className="pointer-events-none fixed inset-x-0 top-24 z-[70] flex justify-center px-4">
+      <div className="pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-2xl border border-outline-variant/20 bg-white/95 p-4 shadow-2xl backdrop-blur">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-white">
+          <span className="material-symbols-outlined">check</span>
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="text-sm font-black tracking-tight">{cartNotice.title}</div>
+          <div className="mt-1 text-sm leading-6 text-on-surface-variant">{cartNotice.message}</div>
+        </div>
+        <button
+          className="rounded-full p-1 text-on-surface-variant transition hover:bg-surface-container-low"
+          onClick={dismissCartNotice}
+          type="button"
+        >
+          <span className="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export function SiteChrome({ children }) {
   const pathname = usePathname();
   const { cartCount, user } = useStore();
@@ -169,6 +198,8 @@ export function SiteChrome({ children }) {
           ) : null}
         </div>
       </header>
+
+      <CartNotice />
 
       <main>{children}</main>
 

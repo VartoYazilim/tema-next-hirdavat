@@ -19,11 +19,9 @@ export function ProductDetailClient({ product, relatedProducts }) {
   const [activeImage, setActiveImage] = useState(product.gallery[0] ?? product.image);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("aciklama");
-  const [message, setMessage] = useState("");
 
   const handleAddToCart = () => {
     addToCart(product.slug, quantity);
-    setMessage("Ürün sepete eklendi.");
   };
 
   return (
@@ -84,7 +82,6 @@ export function ProductDetailClient({ product, relatedProducts }) {
               Hemen Satın Al
             </Link>
           </div>
-          {message ? <div className="mt-3 text-sm font-semibold text-primary">{message}</div> : null}
         </div>
       </div>
 
