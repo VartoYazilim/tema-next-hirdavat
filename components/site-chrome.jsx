@@ -253,10 +253,32 @@ export function SiteChrome({ children }) {
 
           <div className="space-y-4">
             <div className="text-sm font-bold uppercase tracking-[0.24em] text-white/80">
-              Hassas Destek Hattı
+              İletişim
             </div>
             <div className="rounded-2xl bg-stone-800 p-5 text-sm leading-7 text-stone-300">
-              Sipariş takibi, ürün bilgisi ve kurumsal talepler için destek ekibimizle iletişime geçebilirsiniz.
+              <div>
+                Mail:{" "}
+                <a className="font-semibold text-white/90 hover:text-white" href="mailto:bilgi@vartoyazilim.com">
+                  bilgi@vartoyazilim.com
+                </a>
+              </div>
+              <div>
+                Instagram:{" "}
+                <a
+                  className="font-semibold text-white/90 hover:text-white"
+                  href="https://instagram.com/vartoyazilim"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  instagram.com/vartoyazilim
+                </a>
+              </div>
+              <div>
+                Numara:{" "}
+                <a className="font-semibold text-white/90 hover:text-white" href="tel:+905012998492">
+                  0501 299 8492
+                </a>
+              </div>
             </div>
           </div>
         </div>
